@@ -42,9 +42,8 @@ router.post("/login", async (req, res) => {
 
 router.get("/getProfile", async (req, res) => {
   try {
-    console.log(req);
     const user = await User.findOne({ email: req.body.email });
-    return res.status(200).send(user);
+    return res.status(200).send({ user, timestamp: Date.now() });
   } catch (error) {
     return res.status(500).send(error);
   }
