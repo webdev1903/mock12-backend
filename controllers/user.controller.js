@@ -14,7 +14,7 @@ router.post("/register", async (req, res) => {
   try {
     let user = await User.findOne({ email: req.body.email });
     if (user) {
-      return res.status(400).send({ message: "user already exists" });
+      return res.status(403).send({ message: "user already exists" });
     }
     user = await User.create(req.body);
     return res.status(201).send({ message: "user created successfully" });
@@ -31,7 +31,7 @@ router.post("/login", async (req, res) => {
     }
     let match = user.comparePassword(req.body.password);
     if (!match) {
-      return res.status(400).send({ message: "Invalid Credentails" });
+      return res.status(401).send({ message: "Invalid Credentails" });
     }
     let token = newToken(user);
     return res.status(200).send({ user, token });
